@@ -1,0 +1,6 @@
+{
+  "name": "Balcad Travel Agency",
+  "description": "Websaydh dhammaystiran ee Wakaaladda Socdaalka iyo Dalxiiska ee Balcad Travel Agency. Waxaa ku jira maamulka dalabaadka (Orders), wada-sheekaysiga tooska ah (Live Chat) ee u dhexeeya macaamiisha iyo admin-ka, iyo dashboorka maamulka oo leh nidaamka Super Admin iyo Sub-Admin.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
