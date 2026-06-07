@@ -52,7 +52,7 @@ export default function Header({ darkMode, setDarkMode, onOpenSidebar }: HeaderP
 
         {/* Right: Beautiful Status Badge */}
       
-        </div>
+        
 
       </div>
     </header>
