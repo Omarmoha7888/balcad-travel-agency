@@ -51,9 +51,7 @@ export default function Header({ darkMode, setDarkMode, onOpenSidebar }: HeaderP
         </div>
 
         {/* Right: Beautiful Status Badge */}
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-900 text-amber-400 text-xs font-bold shadow-md">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span>Kamid ah Dalxiiska</span>
+      
         </div>
 
       </div>
