@@ -36,7 +36,7 @@ export default function Header({ darkMode, setDarkMode, onOpenSidebar }: HeaderP
             </div>
             <div className="flex flex-col">
               <h1 className="text-sm font-black tracking-wider text-zinc-900 uppercase leading-none font-sans">
-                Balcad Travel
+                Balcad Travel Agency 
               </h1>
               <span className="text-[9px] font-extrabold tracking-widest text-zinc-800 uppercase leading-none mt-0.5">
                 Agency
