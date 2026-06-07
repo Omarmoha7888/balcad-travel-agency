@@ -48,7 +48,7 @@ export default function Header({ darkMode, setDarkMode, onOpenSidebar }: HeaderP
         {/* Center: Welcome Text in Somali */}
         <div className="text-center">
           <p className="text-sm font-semibold tracking-wide text-zinc-900 animate-pulse">
-            ✨ Soo dhawoow macaamiil
+            ✨
           </p>
         </div>
 
