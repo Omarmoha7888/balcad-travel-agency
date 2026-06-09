@@ -5,13 +5,18 @@ interface LogoProps {
   size?: number | string;
 }
 
-export function Logo({ className = '', size = '100%' }: LogoProps) {
+export function Logo({ className = '', size = '55px' }: LogoProps) {
   return (
     <img 
-      src="/logo.png" 
-      alt="Balcad Travel Agency Logo" 
-      className={`inline-block select-none ${className}`}
-      style={{ width: size, height: 'auto' }}
+      logo.png" 
+      alt="Balcad Travel Agency" 
+      className={`inline-block object-contain mix-blend-multiply ${className}`}
+      style={{ 
+        width: size, 
+        height: '55px', 
+        maxHeight: '100%',
+        transform: 'scale(1.2)' // Waxay xogaa kale sii weynaynaysaa baaxadda sawirka
+      }}
     />
   );
 }
