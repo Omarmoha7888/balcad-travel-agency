@@ -185,7 +185,7 @@ export const LocalDB = {
         {
           id: "m_welcome",
           sender: "admin",
-          text: `Asc Soo dhawoow ${userName}! Balcad Travel Agency waa diyaar si ay kuu caawiso. Sideen kuu caawinnaa maanta?`,
+          text: `Asc, Soo dhawoow ${userName}! Balcad Travel Agency waa diyaar si ay kuu caawiso. Sideen kuu caawinnaa maanta?`,
           createdAt: timestamp
         }
       ],
