@@ -13,7 +13,7 @@ export function Logo({ className = '', size = '55px' }: LogoProps) {
       className={`inline-block object-contain mix-blend-multiply ${className}`}
       style={{ 
         width: size, 
-        height: '55px', 
+        height: '100px', 
         maxHeight: '100%',
         transform: 'scale(1.2)' // Waxay xogaa kale sii weynaynaysaa baaxadda sawirka
       }}
