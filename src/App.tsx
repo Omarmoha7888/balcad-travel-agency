@@ -62,7 +62,7 @@ export default function App() {
               <div className="relative py-20 px-4 overflow-hidden bg-neutral-950 text-white border-b border-amber-400/25">
                 <div className="absolute inset-0 z-0 opacity-40">
                   <img
-                    src="logo.png"
+                    src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=1200"
                     alt="Scenic Travel View"
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
