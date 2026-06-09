@@ -8,7 +8,7 @@ interface LogoProps {
 export function Logo({ className = '', size = '100%' }: LogoProps) {
   return (
     <img 
-      src="/Logo.png" 
+      src="/logo.png" 
       alt="Balcad Travel Agency Logo" 
       className={`inline-block select-none ${className}`}
       style={{ width: size, height: 'auto' }}
