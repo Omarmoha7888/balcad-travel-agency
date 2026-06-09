@@ -8,7 +8,7 @@ interface LogoProps {
 export function Logo({ className = '', size = '55px' }: LogoProps) {
   return (
     <img 
-      logo.png" 
+      src="/logo.png" 
       alt="Balcad Travel Agency" 
       className={`inline-block object-contain mix-blend-multiply ${className}`}
       style={{ 
@@ -20,3 +20,4 @@ export function Logo({ className = '', size = '55px' }: LogoProps) {
     />
   );
 }
+
