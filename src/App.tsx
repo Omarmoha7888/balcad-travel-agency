@@ -108,59 +108,7 @@ export default function App() {
               </div>
 
               
-              {/* DYNAMIC NAVIGATION PILL SWITCHER */}
-              <div className="bg-zinc-100/60 dark:bg-zinc-950/80 border-b border-zinc-200 dark:border-zinc-800 sticky top-14 z-30 backdrop-blur-md">
-                <div className="max-w-4xl mx-auto px-4 py-4">
-                  <div className="grid grid-cols-3 gap-2 p-1.5 bg-zinc-200/50 dark:bg-zinc-900/60 rounded-2xl border border-zinc-200/20 dark:border-zinc-800">
-                    
-                    {/* Switcher Tab 1: Products */}
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab('products')}
-                      className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-[11px] font-black tracking-wide uppercase transition-all ${
-                        activeTab === 'products'
-                          ? 'bg-amber-400 text-zinc-950 shadow-md font-black scale-[1.02]'
-                          : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800/50'
-                      }`}
-                    >
-                      <Compass className="w-4 h-4 text-center" />
-                      <span className="hidden sm:inline">1. Adeegyada</span>
-                      <span className="sm:hidden">Adeegyada</span>
-                    </button>
-
-                    {/* Switcher Tab 2: About Us */}
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab('about-us')}
-                      className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-[11px] font-black tracking-wide uppercase transition-all ${
-                        activeTab === 'about-us'
-                          ? 'bg-amber-400 text-zinc-950 shadow-md font-black scale-[1.02]'
-                          : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800/50'
-                      }`}
-                    >
-                      <Users className="w-4 h-4 text-center" />
-                      <span className="hidden sm:inline">2. Ku Saabsan</span>
-                      <span className="sm:hidden">Xogta</span>
-                    </button>
-
-                    {/* Switcher Tab 3: Support / Live Chat */}
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab('live-chat')}
-                      className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-[11px] font-black tracking-wide uppercase transition-all ${
-                        activeTab === 'live-chat'
-                          ? 'bg-amber-400 text-zinc-950 shadow-md font-black scale-[1.02]'
-                          : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800/50'
-                      }`}
-                    >
-                      <Award className="w-4 h-4 text-center animate-pulse" />
-                      <span className="hidden sm:inline">3. Live Support</span>
-                      <span className="sm:hidden">Support</span>
-                    </button>
-
-                  </div>
-                </div>
-              </div>
+ 
 
               {/* RENDER ONLY ACTIVE SECTION VIEW ON SCREEN */}
               <div className="py-2">
