@@ -12,7 +12,7 @@ export function Logo({ className = '', size = '100%' }: LogoProps) {
       width={size}
       height={size}
       className={`inline-block select-none ${className}`}
-      xmlns="http://www.w3.org/2000/svg"
+      xmlns="logo.png"
     >
       <defs>
         {/* Sun Gradient */}
