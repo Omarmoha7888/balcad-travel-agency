@@ -86,16 +86,49 @@ export default function LiveChatSection() {
   //   // Handle message sending
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!activeSession) return;
+    if (!activeSession || (!typedMessage.trim() && !attachedImage)) return;
 
-    const messageText = typedMessage.trim();
-    if (!messageText && !attachedImage) return;
+    const userText = typedMessage.trim();
+    
+    // 1. Marka hore, fariinta macaamilka ku dar database-ka
+    const updatedWithUser = LocalDB.addMessageToChat(
+      activeSession.id, 
+      'user', 
+      userText, 
+      undefined, 
+      attachedImage || undefined
+    );
+    
+    setActiveSession({ ...updatedWithUser });
+    setTypedMessage("");
+    setAttachedImage(null);
+    setIsAiLoading(true);
 
-    // 1. U dir fariinta macaamiisha (User Message)
-    const updated = LocalDB.addMessageToChat(activeSession.id, 'user', messageText || undefined, attachedImage || undefined);
-    if (updated) {
-      setActiveSession({ ...updated });
+    // 2. Halkan waxaan u diraynaa fariinta AI-ga (Gemini API)
+    try {
+      const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=YOUR_API_KEY", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: userText }] }]
+        })
+      });
+
+      const data = await response.json();
+      const aiResponseText = data.candidates[0].content.parts[0].text;
+
+      // 3. Jawaabta AI-ga ku dar database-ka (sender: 'ai')
+      const updatedWithAi = LocalDB.addMessageToChat(activeSession.id, 'ai', aiResponseText);
+      setActiveSession({ ...updatedWithAi });
+
+    } catch (error) {
+      console.error("AI wuu fashilmay:", error);
+      LocalDB.addMessageToChat(activeSession.id, 'ai', "Waan ka xumahay, hadda ma awoodo inaan jawaabo, fadlan isku day mar kale.");
+    } finally {
+      setIsAiLoading(false);
     }
+  };
+
     
     // 2. Reset states
     setTypedMessage("");
