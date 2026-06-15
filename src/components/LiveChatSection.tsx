@@ -68,7 +68,7 @@ export default function LiveChatSection() {
     setErrorMsg("");
 
     if (!fullName.trim() || !phone.trim() || !email.trim()) {
-      setErrorMsg("Fadlan buuxi dhammaan meelaha banaan k") ;
+      setErrorMsg("Fadlan buuxi dhammaan meelaha banaan") ;
       return;
     }
 
