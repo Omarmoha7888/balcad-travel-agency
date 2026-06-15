@@ -53,7 +53,7 @@ export interface Order {
 
 export interface Message {
   id: string;
-  sender: 'user' | 'admin' | 'ai';
+  sender: 'user' | 'admin';
   text?: string;
   image?: string; // Base64 or local object URL
   createdAt: string;
