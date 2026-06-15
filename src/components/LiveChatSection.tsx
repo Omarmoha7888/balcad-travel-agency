@@ -106,7 +106,7 @@ export default function LiveChatSection() {
 
     // 2. Halkan waxaan u diraynaa fariinta AI-ga (Gemini API)
     try {
-      const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=YOUR_API_KEY", {
+      const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AQ.Ab8RN6Ih2iZ3RDqX7z2_fh5gv6K-yAKDogAgQFDj8sc-CCAsfg", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
