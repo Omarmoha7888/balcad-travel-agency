@@ -83,23 +83,43 @@ export default function LiveChatSection() {
     setActiveSession(session);
   };
 
-  // Handle message sending
-  const handleSendMessage = (e: React.FormEvent) => {
+  //   // Handle message sending
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!activeSession) return;
 
     const messageText = typedMessage.trim();
     if (!messageText && !attachedImage) return;
 
+    // 1. U dir fariinta macaamiisha (User Message)
     const updated = LocalDB.addMessageToChat(activeSession.id, 'user', messageText || undefined, attachedImage || undefined);
     if (updated) {
       setActiveSession({ ...updated });
     }
     
-    // Reset states
+    // 2. Reset states
     setTypedMessage("");
     setAttachedImage(null);
+
+    // 3. AI-ga ayaa u jawaabaya
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: messageText }),
+      });
+      const data = await response.json();
+
+      // 4. Ku dar jawaabta AI-ga ee database-ka
+      const updatedWithAI = LocalDB.addMessageToChat(activeSession.id, 'assistant', data.text);
+      if (updatedWithAI) {
+        setActiveSession({ ...updatedWithAI });
+      }
+    } catch (error) {
+      console.error("AI-ga wuu ka jawaabi waayay:", error);
+    }
   };
+
 
   // Convert uploaded image to base64
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
