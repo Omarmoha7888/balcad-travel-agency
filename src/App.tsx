@@ -88,24 +88,7 @@ export default function App() {
                     Wakaaladda Socdaalka iyo Dalxiiska ee <strong className="text-amber-400 font-extrabold">Balcad Travel Agency</strong> waxay kuugu adeegaysaa Tikidhada Diyaaradaha, Diyaarinta Hoteelada, Adeega Fiisooyinka, iyo Dalxiiska gudihiisa iyo dibadiisaba.
                   </p>
 
-                  <div className="pt-4 flex flex-wrap gap-4 justify-center">
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab('products')}
-                      className="px-8 py-3.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-zinc-950 font-black text-xs rounded-full shadow-lg active:scale-95 transition-all text-center leading-none uppercase tracking-wider"
-                    >
-                      Eeg Adeegyada
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab('live-chat')}
-                      className="px-8 py-3.5 bg-zinc-900 border border-zinc-700 hover:bg-zinc-805 text-white font-bold text-xs rounded-full active:scale-95 transition-all leading-none uppercase tracking-wider"
-                    >
-                      Nala Hadal (Live Chat)
-                    </button>
-                  </div>
-                </div>
-              </div>
+   
 
               
  
