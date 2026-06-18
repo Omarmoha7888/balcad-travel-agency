@@ -198,7 +198,7 @@ export const LocalDB = {
     return newSession;
   },
 
-  addMessageToChat(chatId: string, sender: 'user' | 'admin'; text?: string, image?: string): ChatSession | null {
+  addMessageToChat(chatId: string, sender: 'user' | 'admin', text?: string, image?: string): ChatSession | null {
     const chats = this.getChats();
     const idx = chats.findIndex(c => c.id === chatId);
     if (idx !== -1) {
