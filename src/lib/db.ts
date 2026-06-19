@@ -8,11 +8,11 @@ import { Order, ChatSession, AdminUser, Advertisement, Message } from '../types'
 // Default Super Admin seeded on first-time initialization
 const DEFAULT_SUPER_ADMIN: AdminUser = {
   id: "super-1",
-  fullName: "Maamulaha Sare (Super Admin)",
-  phone: "0612483838",
+  fullName: "Xuseen maxamuud cali makaraan (super admin",
+  phone: "615501050",
   email: "balcadtravel@gmail.com",
-  username: "superadmin",
-  passwordHash: "123", // Default password '123' (as requested)
+  username: "Xuseen",
+  passwordHash: "admin.50", // Default password 'admin.50' (as requested)
   role: "super",
   createdAt: new Date().toISOString()
 };
