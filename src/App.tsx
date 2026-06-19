@@ -87,6 +87,7 @@ export default function App() {
                   <p className="text-sm md:text-base text-zinc-300 max-w-2xl mx-auto leading-relaxed">
                     Wakaaladda Socdaalka iyo Dalxiiska ee <strong className="text-amber-400 font-extrabold">Balcad Travel Agency</strong> waxay kuugu adeegaysaa Tikidhada Diyaaradaha, Diyaarinta Hoteelada, Adeega Fiisooyinka, iyo Dalxiiska gudihiisa iyo dibadiisaba.
                   </p>
+                </div>
 
    
 
