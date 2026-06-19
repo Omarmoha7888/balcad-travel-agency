@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MessageSquare, Send, Image, X, Circle, HelpCircle, CheckCheck, Loader2 } from 'lucide-react';
+import { MessageSquare, Send, Image, X, Loader2 } from 'lucide-react';
 import { LocalDB, subscribeToDBUpdates } from '../lib/db';
 import { ChatSession } from '../types';
 
@@ -36,7 +36,6 @@ export default function LiveChatSection() {
         if (found) {
           setActiveSession(found);
         } else {
-          // If no longer found or inactive, clear local key
           localStorage.removeItem('active_client_chat_id');
           setActiveSession(null);
         }
@@ -47,7 +46,7 @@ export default function LiveChatSection() {
 
     checkActiveSession();
 
-    // Subscribe to multi-window/tab database syncs (real-time chat!)
+    // Subscribe to database syncs (real-time chat!)
     const unsubscribe = subscribeToDBUpdates(() => {
       checkActiveSession();
     });
@@ -68,7 +67,7 @@ export default function LiveChatSection() {
     setErrorMsg("");
 
     if (!fullName.trim() || !phone.trim() || !email.trim()) {
-      setErrorMsg("Fadlan buuxi dhammaan meelaha banaan") ;
+      setErrorMsg("Fadlan buuxi dhammaan meelaha bannaan ee foomka.");
       return;
     }
 
@@ -83,7 +82,7 @@ export default function LiveChatSection() {
     setActiveSession(session);
   };
 
-  //   // Handle message sending
+  // Handle message sending
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!activeSession) return;
@@ -91,35 +90,36 @@ export default function LiveChatSection() {
     const messageText = typedMessage.trim();
     if (!messageText && !attachedImage) return;
 
-    // 1. U dir fariinta macaamiisha (User Message)
+    // 1. Submit customer's message to local DB state
     const updated = LocalDB.addMessageToChat(activeSession.id, 'user', messageText || undefined, attachedImage || undefined);
     if (updated) {
       setActiveSession({ ...updated });
     }
     
-    // 2. Reset states
+    // 2. Reset message input buffers
     setTypedMessage("");
     setAttachedImage(null);
 
-    // 3. AI-ga ayaa u jawaabaya
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: messageText }),
-      });
-      const data = await response.json();
+    // 3. Query secure backend chatbot agent route proxy (connected server-side to Gemini API) only if there is no administrator assigned
+    if (updated && !updated.assignedAdminId) {
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: messageText || "Sawir ayaa ku lifaaqan" }),
+        });
+        const data = await response.json();
 
-      // 4. Ku dar jawaabta AI-ga ee database-ka
-      const updatedWithAI = LocalDB.addMessageToChat(activeSession.id, 'assistant', data.text);
-      if (updatedWithAI) {
-        setActiveSession({ ...updatedWithAI });
+        // 4. Save assistant reply
+        const updatedWithAI = LocalDB.addMessageToChat(activeSession.id, 'assistant', data.text);
+        if (updatedWithAI) {
+          setActiveSession({ ...updatedWithAI });
+        }
+      } catch (error) {
+        console.error("AI-ga wuu ka jawaabi waayay:", error);
       }
-    } catch (error) {
-      console.error("AI-ga wuu ka jawaabi waayay:", error);
     }
   };
-
 
   // Convert uploaded image to base64
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -145,12 +145,9 @@ export default function LiveChatSection() {
   // Close active chat
   const handleCloseChat = () => {
     if (activeSession) {
-      // 1. Mark as inactive in DB
       LocalDB.closeChat(activeSession.id);
-      // 2. Clear client session
       localStorage.removeItem('active_client_chat_id');
       setActiveSession(null);
-      // 3. Reset fields
       setFullName("");
       setPhone("");
       setEmail("");
@@ -163,14 +160,14 @@ export default function LiveChatSection() {
         
         {/* Title block */}
         <div className="text-center mb-10">
-          <span className="text-xs font-bold uppercase tracking-widest text-amber-500 bg-amber-100 dark:bg-amber-950/50 px-3 py-1 pb-1.5 rounded-full inline-block mb-3 border border-amber-300/30">
+          <span className="text-xs font-bold uppercase tracking-widest text-amber-500 bg-amber-100 dark:bg-amber-955/50 px-3 py-1 pb-1.5 rounded-full inline-block mb-3 border border-amber-300/30">
             Wada-sheekaysi Toos Ah
           </span>
           <h2 className="text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-100">
             Taageerada Wada-sheekaysiga
           </h2>
-          <p className="mt-3 text-xs text-zinc-550 dark:text-zinc-400 max-w-xl mx-auto">
-            Ma u baahan tahay caawimaad dhow oo degdeg ah? Nala hadal hadda. Kooxda shaqada ee Balcad Travel Agency ayaa halkan kuugu diyaarsan 24/7.
+          <p className="mt-3 text-xs text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto leading-relaxed">
+            Ma u baahan tehay caawimaad dhow oo degdeg ah? Nala hadal hadda. Kooxda shaqada ee Balcad Travel Agency ayaa halkan kuugu diyaarsan 24/7 si ay kuugu caawiso su'aalahaaga.
           </p>
         </div>
 
@@ -189,14 +186,14 @@ export default function LiveChatSection() {
                 className="p-6 md:p-8"
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-3 bg-amber-400 text-zinc-950 rounded-2xl">
-                    <MessageSquare className="w-6 h-6" />
+                  <div className="p-3 bg-amber-400 text-zinc-950 rounded-2xl bg-gradient-to-tr from-amber-400 to-yellow-405">
+                    <MessageSquare className="w-6 h-6 text-zinc-905" />
                   </div>
                   <div>
                     <h3 className="font-extrabold text-md text-zinc-900 dark:text-zinc-100">
                       Ku Biir Wada-sheekaysiga
                     </h3>
-                    <p className="text-xs text-zinc-400">
+                    <p className="text-xs text-zinc-400 mt-0.5">
                       Macaamiil, buuxi foomkan yar si aad u bilowdo wadahadalka kooxdeena.
                     </p>
                   </div>
@@ -217,17 +214,17 @@ export default function LiveChatSection() {
                     <input
                       type="text"
                       required
-                      placeholder="Maxamed Cali"
+                      placeholder="Tusaale: Maxamed Cali Axmed"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       className="w-full px-4 py-2.5 border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-850 rounded-xl text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
                     />
                   </div>
 
-                  {/* Phone/Number */}
+                  {/* Phone / Email */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-1">
+                      <label className="block text-xs font-bold text-zinc-700 dark:text-zinc-350 uppercase tracking-wider mb-1">
                         Lambarka Telefoonka <span className="text-red-500">*</span>
                       </label>
                       <input
@@ -240,9 +237,8 @@ export default function LiveChatSection() {
                       />
                     </div>
 
-                    {/* Email */}
                     <div>
-                      <label className="block text-xs font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-1">
+                      <label className="block text-xs font-bold text-zinc-700 dark:text-zinc-355 uppercase tracking-wider mb-1">
                         Email-kaaga <span className="text-red-500">*</span>
                       </label>
                       <input
@@ -259,7 +255,7 @@ export default function LiveChatSection() {
                   <button
                     id="btn_start_chat_session"
                     type="submit"
-                    className="w-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-zinc-950 font-extrabold text-xs py-3.5 rounded-xl hover:shadow-lg active:scale-95 transition-all outline-none"
+                    className="w-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-zinc-955 font-extrabold text-xs py-3.5 rounded-xl hover:shadow-lg active:scale-95 transition-all outline-none cursor-pointer"
                   >
                     Bilow Wada-sheekaysiga
                   </button>
@@ -280,7 +276,7 @@ export default function LiveChatSection() {
                 <div className="p-4 border-b border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <div className="relative">
-                      <div className="w-9 h-9 bg-amber-400 text-zinc-950 font-extrabold flex items-center justify-center rounded-full text-xs shadow-sm capitalize">
+                      <div className="w-9 h-9 bg-amber-400 text-zinc-955 font-extrabold flex items-center justify-center rounded-full text-xs shadow-sm capitalize">
                         {activeSession.userName.substring(0, 2)}
                       </div>
                       <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border border-white dark:border-zinc-950 animate-pulse" />
@@ -295,13 +291,13 @@ export default function LiveChatSection() {
                     </div>
                   </div>
                   
-                  {/* CLOSE CHAT BUTTON OF CONSTRAINTS */}
+                  {/* CLOSE CHAT BUTTON */}
                   <button
                     id="btn_close_active_chat"
                     type="button"
                     onClick={handleCloseChat}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 hover:bg-red-100 dark:bg-red-950/30 text-red-600 dark:text-red-400 border border-red-300/10 hover:border-red-300/20 text-[10px] font-bold rounded-full transition-all"
-                    title="Xar ga sheekaysiga si ammaan ah"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 hover:bg-red-100 dark:bg-red-950/30 text-red-600 dark:text-red-400 border border-red-300/10 hover:border-red-300/20 text-[10px] font-bold rounded-full transition-all cursor-pointer"
+                    title="Xir wada-hadalka hadda"
                   >
                     <X className="w-3.5 h-3.5" />
                     <span>Xir Chat-ka</span>
@@ -323,13 +319,11 @@ export default function LiveChatSection() {
                       >
                         <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 shadow-sm text-xs leading-relaxed ${
                           isMe 
-                            ? 'bg-zinc-900 text-white dark:bg-amber-400 dark:text-zinc-950 rounded-tr-none' 
+                            ? 'bg-zinc-900 text-white dark:bg-amber-400 dark:text-zinc-950 rounded-tr-none font-bold' 
                             : 'bg-zinc-150 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 rounded-tl-none'
                         }`}>
-                          {/* Text message if exists */}
                           {msg.text && <p className="whitespace-pre-wrap">{msg.text}</p>}
                           
-                          {/* Uploaded Photo rendering inside Chat */}
                           {msg.image && (
                             <div className="mt-1.5 rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900">
                               <img
@@ -341,7 +335,7 @@ export default function LiveChatSection() {
                             </div>
                           )}
 
-                          <span className={`text-[9px] block text-right mt-1.5 opacity-60`}>
+                          <span className="text-[9px] block text-right mt-1.5 opacity-60">
                             {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                           </span>
                         </div>
@@ -368,7 +362,7 @@ export default function LiveChatSection() {
                     <button
                       type="button"
                       onClick={() => setAttachedImage(null)}
-                      className="p-1 bg-zinc-950/10 hover:bg-zinc-950/20 rounded-full transition-all"
+                      className="p-1 bg-zinc-950/10 hover:bg-zinc-950/20 rounded-full transition-all cursor-pointer"
                     >
                       <X className="w-3.5 h-3.5 text-zinc-700 dark:text-zinc-300" />
                     </button>
@@ -380,7 +374,6 @@ export default function LiveChatSection() {
                   onSubmit={handleSendMessage} 
                   className="p-3 bg-white dark:bg-zinc-900 border-t border-zinc-100 dark:border-zinc-800 flex items-center gap-2"
                 >
-                  {/* File input for Picture Gallery upload */}
                   <input
                     type="file"
                     accept="image/*"
@@ -392,18 +385,17 @@ export default function LiveChatSection() {
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="p-2.5 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-750 text-zinc-650 dark:text-zinc-355 rounded-xl transition-all relative shrink-0"
+                    className="p-2.5 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-850 dark:hover:bg-zinc-800 text-zinc-650 rounded-xl transition-all relative shrink-0 cursor-pointer"
                     title="Soo rar sawir"
                     disabled={isUploadingImage}
                   >
                     {isUploadingImage ? (
                       <Loader2 className="w-4.5 h-4.5 animate-spin text-amber-500" />
                     ) : (
-                      <Image className="w-4.5 h-4.5 text-zinc-550 dark:text-zinc-400" />
+                      <Image className="w-4.5 h-4.5 text-zinc-500 dark:text-zinc-400" />
                     )}
                   </button>
 
-                  {/* Text Input */}
                   <input
                     type="text"
                     placeholder="Qor farriintaada..."
@@ -412,13 +404,12 @@ export default function LiveChatSection() {
                     className="flex-1 bg-zinc-50 dark:bg-zinc-850 text-zinc-900 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-700 px-4 py-2.5 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-amber-400"
                   />
 
-                  {/* Send Action */}
                   <button
                     id="btn_send_chat_msg"
                     type="submit"
-                    className="p-2.5 bg-gradient-to-r from-amber-400 to-yellow-500 text-zinc-950 rounded-xl font-bold shadow-md hover:shadow-lg active:scale-95 transition-all outline-none text-xs shrink-0"
+                    className="p-2.5 bg-gradient-to-r from-amber-400 to-yellow-501 text-zinc-950 rounded-xl font-bold shadow-md hover:shadow-lg active:scale-95 transition-all outline-none text-xs shrink-0 cursor-pointer"
                   >
-                    <Send className="w-4 h-4" />
+                    <Send className="w-4 h-4 text-zinc-950" />
                   </button>
                 </form>
 
@@ -431,4 +422,4 @@ export default function LiveChatSection() {
       </div>
     </section>
   );
-      }
+                  }
