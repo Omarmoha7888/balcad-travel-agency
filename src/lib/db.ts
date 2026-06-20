@@ -8,7 +8,7 @@ import { Order, ChatSession, AdminUser, Advertisement, Message } from '../types'
 // Default Super Admin seeded on first-time initialization
 const DEFAULT_SUPER_ADMIN: AdminUser = {
   id: "super-1",
-  fullName: "Xuseen maxamuud cali makaraan (super admin",
+  fullName: "Xuseen maxamuud cali makaraan (super admin)",
   phone: "615501050",
   email: "balcadtravel@gmail.com",
   username: "Xuseen",
