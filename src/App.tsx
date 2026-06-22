@@ -11,14 +11,15 @@ import ProductsSection from './components/ProductsSection';
 import AboutUsSection from './components/AboutUsSection';
 import LiveChatSection from './components/LiveChatSection';
 import AdminDashboard from './components/AdminDashboard';
-import { Compass, Users, Award, ShieldAlert } from 'lucide-react';
+import MyOrdersSection from './components/MyOrdersSection';
+import { Compass } from 'lucide-react';
 
 export default function App() {
   const darkMode = false;
   const setDarkMode = () => {};
   
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'products' | 'about-us' | 'live-chat' | 'admin'>('products');
+  const [activeTab, setActiveTab] = useState<'products' | 'about-us' | 'live-chat' | 'admin' | 'my-orders'>('products');
 
   // Ensure dark mode is disabled on mount
   useEffect(() => {
@@ -27,9 +28,9 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-zinc-900 font-sans flex flex-col justify-between selection:bg-amber-400 selection:text-zinc-900">
+    <div className="min-h-screen bg-white text-zinc-900 font-sans flex flex-col justify-between selection:bg-amber-400 selection:text-zinc-950">
       
-      {/* 1. Header component (with toggle) */}
+      {/* 1. Header component */}
       <Header
         darkMode={darkMode}
         setDarkMode={setDarkMode}
@@ -74,9 +75,9 @@ export default function App() {
                   <motion.div
                     initial={{ scale: 0.95, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="inline-flex gap-2 items-center px-4 py-1.5 bg-amber-400/10 border border-amber-400/30 rounded-full text-amber-400 font-bold text-xs uppercase tracking-widest leading-none"
+                    className="inline-flex gap-2 items-center px-4 py-1.5 bg-amber-400/10 border border-amber-400/30 rounded-full text-amber-400 font-bold text-xs uppercase tracking-widest leading-none select-none"
                   >
-                    <Compass className="w-3.5 h-3.5 animate-spin-slow" />
+                    <Compass className="w-3.5 h-3.5 animate-spin" style={{ animationDuration: '6s' }} />
                     <span>Balcad, Somalia</span>
                   </motion.div>
 
@@ -85,71 +86,14 @@ export default function App() {
                   </h2>
 
                   <p className="text-sm md:text-base text-zinc-300 max-w-2xl mx-auto leading-relaxed">
-                    Wakaaladda Socdaalka iyo Dalxiiska ee <strong className="text-amber-400 font-extrabold">Balcad Travel Agency</strong> waxay kuugu adeegaysaa Tikidhada Diyaaradaha, Diyaarinta Hoteelada, Adeega Fiisooyinka, iyo Dalxiiska gudihiisa iyo dibadiisaba.
+                    Wakaaladda Socdaalka iyo Dalxiiska ee <strong className="text-amber-450 font-extrabold text-amber-500">Balcad Travel Agency</strong> waxay kuugu adeegaysaa Tikidhada Diyaaradaha, Diyaarinta Hoteelada, Adeega Fiisooyinka, iyo Dalxiiska gudihiisa iyo dibadiisaba.
                   </p>
-                              <div className="pt-4 flex flex-wrap gap-4 justify-center">
-                    
+
+                  <div className="pt-4 flex flex-wrap gap-4 justify-center">
+               
                   </div>
                 </div>
               </div>
-                
-{/* DYNAMIC NAVIGATION PILL SWITCHER */}
-              <div className="bg-zinc-100/60 dark:bg-zinc-950/80 border-b border-zinc-200 dark:border-zinc-800 sticky top-14 z-30 backdrop-blur-md">
-                <div className="max-w-4xl mx-auto px-4 py-4">
-                  <div className="grid grid-cols-3 gap-2 p-1.5 bg-zinc-200/50 dark:bg-zinc-900/60 rounded-2xl border border-zinc-200/20 dark:border-zinc-800">
-                    
-                    {/* Switcher Tab 1: Products */}
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab('products')}
-                      className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-[11px] font-black tracking-wide uppercase transition-all ${
-                        activeTab === 'products'
-                          ? 'bg-amber-400 text-zinc-950 shadow-md font-black scale-[1.02]'
-                          : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800/50'
-                      }`}
-                    >
-                      <Compass className="w-4 h-4 text-center" />
-                      <span className="hidden sm:inline">1. Adeegyada</span>
-                      <span className="sm:hidden">Adeegyada</span>
-                    </button>
-
-                    {/* Switcher Tab 2: About Us */}
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab('about-us')}
-                      className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-[11px] font-black tracking-wide uppercase transition-all ${
-                        activeTab === 'about-us'
-                          ? 'bg-amber-400 text-zinc-950 shadow-md font-black scale-[1.02]'
-                          : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800/50'
-                      }`}
-                    >
-                      <Users className="w-4 h-4 text-center" />
-                      <span className="hidden sm:inline">2. Ku Saabsan</span>
-                      <span className="sm:hidden">Xogta</span>
-                    </button>
-
-                    {/* Switcher Tab 3: Support / Live Chat */}
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab('live-chat')}
-                      className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-[11px] font-black tracking-wide uppercase transition-all ${
-                        activeTab === 'live-chat'
-                          ? 'bg-amber-400 text-zinc-950 shadow-md font-black scale-[1.02]'
-                          : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800/50'
-                      }`}
-                    >
-                      <Award className="w-4 h-4 text-center animate-pulse" />
-                      <span className="hidden sm:inline">3. Live Support</span>
-                      <span className="sm:hidden">Support</span>
-                    </button>
-
-                  </div>
-                </div>
-              </div>
-   
-
-              
- 
 
               {/* RENDER ONLY ACTIVE SECTION VIEW ON SCREEN */}
               <div className="py-2">
@@ -189,6 +133,18 @@ export default function App() {
                       <LiveChatSection />
                     </motion.div>
                   )}
+
+                  {activeTab === 'my-orders' && (
+                    <motion.div
+                      key="orders-view"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <MyOrdersSection />
+                    </motion.div>
+                  )}
                 </AnimatePresence>
               </div>
 
@@ -203,12 +159,12 @@ export default function App() {
               exit={{ opacity: 0, scale: 0.99 }}
               transition={{ duration: 0.2 }}
             >
-              <div className="bg-zinc-100 dark:bg-zinc-950/60 p-1 border-b border-zinc-200 dark:border-zinc-900">
+              <div className="bg-zinc-100 p-1 border-b border-zinc-200">
                 <div className="max-w-6xl mx-auto py-3 px-4 flex items-center justify-between">
                   <button
                     type="button"
                     onClick={() => setActiveTab('products')}
-                    className="text-xs font-black text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1 bg-amber-400/10 hover:bg-amber-400/20 px-3 py-1.5 rounded-lg border border-amber-400/20 select-none cursor-pointer transition-colors"
+                    className="text-xs font-black text-amber-600 hover:underline flex items-center gap-1 bg-amber-400/10 hover:bg-amber-400/20 px-3 py-1.5 rounded-lg border border-amber-400/20 select-none cursor-pointer transition-colors"
                   >
                     ← Ku laabo bogga macmiilka
                   </button>
@@ -225,8 +181,6 @@ export default function App() {
           )}
         </AnimatePresence>
       </main>
-
-      {/* STRICT NO FOOTER CONSTRAINT COMPLIED EXACTLY */}
 
     </div>
   );
