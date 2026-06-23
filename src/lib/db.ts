@@ -17,7 +17,7 @@ const STORAGE_KEYS = {
 const DEFAULT_ADMINS: AdminUser[] = [
   {
     id: 'super-1',
-    fullName: 'Hussein Mohamud Ali (admin),
+    fullName: 'Hussein Mohamud Ali ,
     phone: '0615501050',
     email: 'balcadtravel@gmail.com',
     username: 'Xuseen',
