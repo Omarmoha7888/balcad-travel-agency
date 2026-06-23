@@ -17,11 +17,11 @@ const STORAGE_KEYS = {
 const DEFAULT_ADMINS: AdminUser[] = [
   {
     id: 'super-1',
-    fullName: 'Maamulaha Sare ee Balcad',
-    phone: '0612483838',
+    fullName: 'Hussein Mohamud Ali (admin),
+    phone: '0615501050',
     email: 'balcadtravel@gmail.com',
-    username: 'superadmin',
-    passwordHash: 'balcad123',
+    username: 'Xuseen',
+    passwordHash: 'admin',
     role: 'super',
   }
 ];
